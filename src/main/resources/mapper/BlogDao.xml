@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为dao接口方法提供sql语句配置 -->
+<mapper namespace="com.blog.dao.BlogDao">
+
+    <select id="queryAll" resultType="Blog">
+        select id, title, content, cate_id, create_time
+        from blog
+    </select>
+
+    <insert id="addBlog" parameterType="Blog">
+        insert into blog (id, title, content, cate_id, create_time)
+        values(#{id}, #{title}, #{content}, #{cate_id}, #{create_time})
+    </insert>
+
+</mapper>
