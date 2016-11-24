@@ -19,4 +19,19 @@ VALUES
   ('scrum development', 'scrum development scrum development scrum development', 200),
   ('lean development', 'lean development lean development lean development', 300);
 
+USE ssmblog;
+
+CREATE TABLE category(
+  id BIGINT NOT NULL AUTO_INCREMENT COMMENT 'category id',
+  name varchar(100) NOT NULL COMMENT 'category name',
+  PRIMARY KEY(id)
+)AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='category';
+
+INSERT  INTO
+  category(name)
+VALUES
+  ('agile development'),
+  ('development'),
+  ('research');
+
 mysql -uroot -p

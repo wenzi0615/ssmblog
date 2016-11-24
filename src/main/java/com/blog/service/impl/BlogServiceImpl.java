@@ -2,38 +2,60 @@ package com.blog.service.impl;
 
 import com.blog.dao.BlogDao;
 import com.blog.entity.Blog;
+import com.blog.enums.BlogActionStateEnum;
+import com.blog.exception.AddException;
+import com.blog.exception.DeleteException;
+import com.blog.exception.ModifyException;
 import com.blog.service.BlogService;
-import org.apache.commons.collections.MapUtils;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-/**
- * 业务接口；站在使用者角度设计接口
- * 三个方面：方法定义粒度，参数，返回类型
- * Created by yanjunwang on 16/10/1.
- */
+import java.util.List;
 
 @Service
-public class BlogServiceImpl implements BlogService {
+public class BlogServiceImpl implements BlogService{
 
     private Logger logger= LoggerFactory.getLogger(this.getClass());
 
-    //自动注入Service依赖
-
+    //注入service依赖
     @Autowired
     private BlogDao blogDao;
 
     public List<Blog> getBlogList() {
+        return blogDao.queryAll(0,10);
+    }
 
-        return blogDao.queryAll();
+    public String addBlog(Blog blog) throws AddException{
+        int result=blogDao.addBlog(blog.getTitle(), blog.getContent(), blog.getCateId());
+        if(result==1)
+            return BlogActionStateEnum.ADD_SUCCESS.getStateInfo();
+        else {
+            throw new AddException(BlogActionStateEnum.ADD_ERROR.getStateInfo());
+        }
+    }
+
+    public String deleteBlog(int id) throws DeleteException{
+        int result=blogDao.deleteBlog(id);
+        if(result==1)
+            return BlogActionStateEnum.DELETE_SUCCESS.getStateInfo();
+        else {
+            throw new DeleteException(BlogActionStateEnum.DELETE_ERROR.getStateInfo());
+        }
+    }
+
+    public String modifyBlog(Blog blog) throws ModifyException{
+        int result=blogDao.updateBlog(blog.getId(), blog.getTitle(), blog.getContent(), blog.getCateId());
+        if(result==1)
+            return BlogActionStateEnum.MODIFY_SUCCESS.getStateInfo();
+        else {
+            throw new ModifyException(BlogActionStateEnum.MODIFY_ERROR.getStateInfo());
+        }
+    }
+
+    public Blog getBlogById(int id) {
+        return blogDao.queryById(id);
     }
 
 }

@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <%@include file="../common/tag.jsp" %>
 <!DOCTYPE html>
+<!-- 拷贝html模板 -->
 <html>
 <head>
     <title>博客列表页</title>
@@ -20,7 +25,6 @@
                         <tr>
                             <td>编号</td>
                             <td>题目</td>
-                            <td>内容</td>
                             <td>类别编号</td>
                             <td>创建时间</td>
                             <td></td>
@@ -31,22 +35,26 @@
                         <tr>
                             <td>${bl.id}</td>
                             <td>${bl.title}</td>
-                            <td>${bl.content}</td>
                             <td>${bl.cateId}</td>
                             <td>
                                 <fmt:formatDate value="${bl.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                             </td>
-
                             <td>
-                                <a href="#" class="btn btn-info" target="_blank">修改</a>
+                                <a href="/blog/${bl.id}/article" class="btn btn-info" target="_blank">详情</a>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-info" target="_blank">删除</a>
+                                <a href="/blog/${bl.id}/modifyBlog" class="btn btn-info" target="_blank">修改</a>
+                            </td>
+                            <td>
+                                <a href="/blog/${bl.id}/delete" class="btn btn-info" target="_blank">删除</a>
                             </td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
+            </div>
+            <div>
+                <a href="/blog/addBlog" class="btn btn-info" target="_blank">添加</a>
             </div>
         </div>
     </div>

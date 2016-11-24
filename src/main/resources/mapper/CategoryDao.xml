@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为dao接口方法提供sql语句配置 sql语句结尾没分号-->
+<mapper namespace="com.blog.dao.CategoryDao">
+
+    <select id="queryAll" resultType="Category">
+        <!-- 具体的sql语句 id是方法名 resultType是返回类型 int不用给 parameter会自动识别-->
+        select id, name
+        from category
+        order by id
+        limit #{offset}, #{limit}
+    </select>
+
+    <insert id="addCategory" parameterType="Category">
+        <!-- ignore: 主键冲突时 忽略错误并返回0 -->
+        insert ignore into category(name)
+        values(#{name});
+    </insert>
+
+    <delete id="deleteCategory" parameterType="int">
+        delete from category
+        where id=#{id}
+    </delete>
+
+    <update id="updateCategory" parameterType="Category">
+        update category
+        set name=#{name}
+        where id=#{id}
+    </update>
+
+    <select id="queryById" parameterType="int" resultType="Category">
+        select id, name
+        from category
+        where id=#{id}
+    </select>
+
+</mapper>

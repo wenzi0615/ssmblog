@@ -16,14 +16,16 @@
     <!--
         简化配置:
         (1)自动注册DefaultAnnotationHandlerMapping,AnnotationMothHandlerAdapter
-        (2)提供一系列数据绑定、数字和日期的format,@NumberFormat,@DateTimeFormat,json、xml默认读写支持
+        (2)提供一系列数据绑定、数字和日期的format,@NumberFormat,@DateTimeFormat,
+           json、xml默认读写支持
     -->
     <mvc:annotation-driven/>
 
+    <!-- servlet-mapping 映射路径:"/" 之前不允许 要配置 -->
     <!--
         2.静态资源配置
         (1)加入对静态资源的支持:js、png、gif。。。
-        (2)允许使用/作为整体映射
+        (2)允许使用"/"作为整体映射
     -->
     <mvc:default-servlet-handler/>
 

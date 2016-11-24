@@ -2,27 +2,30 @@ package com.blog.dao;
 
 import com.blog.entity.Blog;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
-/**
- * Created by yanjunwang on 16/10/11.
- */
+@Repository
 public interface BlogDao {
 
     /**
-     * 列出所有博客简单信息列表
+     * 列出所有博客
+     * @param offset
+     * @param limit
      * @return
      */
 
-    List<Blog> queryAll();
+    List<Blog> queryAll(@Param("offset") int offset, @Param("limit") int limit);
 
     /**
      * 增加一条博客
      * @return 如果影响记录数=1，表示增加成功
      */
 
-    int addBlog();
+    int addBlog(@Param("title") String title, @Param("content") String content, @Param("cateId") int cateId);
 
 
     /**
@@ -30,7 +33,7 @@ public interface BlogDao {
      * @return 如果影响记录数=1，表示删除成功
      */
 
-    int deleteBlog();
+    int deleteBlog(int id);
 
 
     /**
@@ -38,21 +41,13 @@ public interface BlogDao {
      * @return 如果影响记录数=1，表示更新成功
      */
 
-    int updateBlog();
+    int updateBlog(@Param("id") int id, @Param("title") String title,
+                   @Param("content") String content, @Param("cateId") int cateId);
 
     /**
-     * 显示所有博客
+     * 显示指定博客
      * @return
      */
 
-    List<Blog> listAllBlog();
-
-//    /**
-//     * 根据偏移量查询所有微博列表
-//     * @param offset
-//     * @param limit
-//     * @return
-//     */
-
-//    List<Blog> queryAll(@Param("offset") int offset, @Param("limit") int limit);
+    Blog queryById(int id);
 }
