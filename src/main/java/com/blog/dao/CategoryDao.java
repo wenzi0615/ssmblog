@@ -18,11 +18,11 @@ public interface CategoryDao {
 
     /**
      * 添加新的blog category
-     * @param name
+     * @param category
      * @return
      */
 
-    int addCategory(@Param("name") String name);
+    int addCategory(Category category);
 
     /**
      * 删除一条blog category
@@ -34,18 +34,18 @@ public interface CategoryDao {
 
     /**
      * 更新一条blog category的名字
-     * @param id
-     * @param name
+     * @param category
      * @return
      */
 
-    int updateCategory(@Param("id") int id, @Param("name") String name);
+    int updateCategory(Category category);
 
     /**
      * 查看指定blog category
      * @param id
      * @return
      */
+
     Category queryById(int id);
 
 }

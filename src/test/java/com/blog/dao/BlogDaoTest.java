@@ -38,10 +38,11 @@ public class BlogDaoTest {
     @Test
     public void addBlog() throws Exception {
 
-        String title="Large-Scale Agile 4";
-        String content="Large-Scale Agile 4, Large-Scale Agile 4";
-        int cateId=400;
-        int result=blogDao.addBlog(title, content, cateId);
+        Blog blog=new Blog();
+        blog.setTitle("Large-Scale Agile 4");
+        blog.setContent("Large-Scale Agile 4, Large-Scale Agile 4");
+        blog.setCateId(666);
+        int result=blogDao.addBlog(blog);
         System.out.println("result: "+result);
     }
 
@@ -56,11 +57,13 @@ public class BlogDaoTest {
     @Test
     public void updateBlog() throws Exception {
 
-        int id=1003;
-        String title="Large-Scale Agile 3";
-        String content="Large-Scale Agile 3, Large-Scale Agile 3";
-        int cateId=300;
-        int result=blogDao.updateBlog(id, title, content, cateId);
+        Blog blog=new Blog();
+        blog.setId(1004);
+        blog.setTitle("Large-Scale Agile 4");
+        blog.setContent("Large-Scale Agile 4, Large-Scale Agile 4");
+        blog.setCateId(777);
+
+        int result=blogDao.updateBlog(blog);
         System.out.println("result: "+result);
     }
 

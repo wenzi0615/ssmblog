@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为dao接口方法提供sql语句配置 sql语句结尾没分号-->
+<mapper namespace="com.blog.dao.CommentDao">
+
+    <select id="queryAll" resultType="Comment">
+    <!-- 具体的sql语句 id是方法名 resultType是返回类型 int不用给 parameter会自动识别-->
+        select id, user_id, comment, blog_id, create_time
+        from comment
+        order by create_time desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <insert id="addComment" parameterType="Comment">
+        <!-- ignore: 主键冲突时 忽略错误并返回0 -->
+        <!-- create_time->createTime config自动转换 -->
+        insert ignore into comment (user_id, comment, blog_id)
+        values(#{userId}, #{comment}, #{blogId});
+    </insert>
+
+    <delete id="deleteComment" parameterType="int">
+        delete from comment
+        where id=#{id}
+    </delete>
+
+    <update id="updateComment" parameterType="Comment">
+        update comment
+        set user_id=#{userId},
+        comment=#{comment},
+        blog_id=#{blogId}
+        where id=#{id}
+    </update>
+
+    <select id="queryByBlogId" parameterType="int" resultType="Comment">
+        select id, user_id, comment, blog_id, create_time
+        from comment
+        where blog_id=#{blogId}
+    </select>
+
+</mapper>

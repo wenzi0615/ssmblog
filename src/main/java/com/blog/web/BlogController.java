@@ -1,8 +1,8 @@
 package com.blog.web;
 
 import com.blog.entity.Blog;
-import com.blog.enums.BlogActionStateEnum;
-import com.blog.exception.DeleteException;
+import com.blog.enums.OperStateEnum;
+import com.blog.exception.ManagementException;
 import com.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,11 +60,13 @@ public class BlogController {
         blog.setTitle(title);
         blog.setContent(content);
         blog.setCateId(cateId);
-        String result=blogService.addBlog(blog);
-        if(result.equals(BlogActionStateEnum.ADD_SUCCESS.getStateInfo()))
-            return "redirect:/blog/success";
-        else
+
+        try{
+            String result=blogService.addBlog(blog);
+        }catch (ManagementException e) {
             return "redirect:/blog/failure";
+        }
+        return "redirect:/blog/success";
     }
 
     @RequestMapping(value="/{blogId}/delete", method = RequestMethod.GET)
@@ -72,7 +74,7 @@ public class BlogController {
 
         try{
             String result=blogService.deleteBlog(blogId);
-        }catch (DeleteException e) {
+        }catch (ManagementException e) {
             return "redirect:/blog/failure";
         }
         return "redirect:/blog/success";
@@ -106,11 +108,12 @@ public class BlogController {
         blog.setContent(content);
         blog.setCateId(cateId);
 
-        String result=blogService.modifyBlog(blog);
-        if(result.equals(BlogActionStateEnum.MODIFY_SUCCESS.getStateInfo()))
-            return "redirect:/blog/success";
-        else
+        try{
+            String result=blogService.modifyBlog(blog);
+        }catch (ManagementException e) {
             return "redirect:/blog/failure";
+        }
+        return "redirect:/blog/success";
     }
 
     @RequestMapping(value="/success", method = RequestMethod.GET)

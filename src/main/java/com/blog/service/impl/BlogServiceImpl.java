@@ -2,10 +2,8 @@ package com.blog.service.impl;
 
 import com.blog.dao.BlogDao;
 import com.blog.entity.Blog;
-import com.blog.enums.BlogActionStateEnum;
-import com.blog.exception.AddException;
-import com.blog.exception.DeleteException;
-import com.blog.exception.ModifyException;
+import com.blog.enums.OperStateEnum;
+import com.blog.exception.ManagementException;
 import com.blog.service.BlogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,30 +25,30 @@ public class BlogServiceImpl implements BlogService{
         return blogDao.queryAll(0,10);
     }
 
-    public String addBlog(Blog blog) throws AddException{
-        int result=blogDao.addBlog(blog.getTitle(), blog.getContent(), blog.getCateId());
+    public String addBlog(Blog blog) throws ManagementException{
+        int result=blogDao.addBlog(blog);
         if(result==1)
-            return BlogActionStateEnum.ADD_SUCCESS.getStateInfo();
+            return OperStateEnum.BLOG_ADD_SUCCESS.getStateInfo();
         else {
-            throw new AddException(BlogActionStateEnum.ADD_ERROR.getStateInfo());
+            throw new ManagementException(OperStateEnum.BLOG_ADD_ERROR.getStateInfo());
         }
     }
 
-    public String deleteBlog(int id) throws DeleteException{
+    public String deleteBlog(int id) throws ManagementException{
         int result=blogDao.deleteBlog(id);
         if(result==1)
-            return BlogActionStateEnum.DELETE_SUCCESS.getStateInfo();
+            return OperStateEnum.BLOG_DELETE_SUCCESS.getStateInfo();
         else {
-            throw new DeleteException(BlogActionStateEnum.DELETE_ERROR.getStateInfo());
+            throw new ManagementException(OperStateEnum.BLOG_DELETE_ERROR.getStateInfo());
         }
     }
 
-    public String modifyBlog(Blog blog) throws ModifyException{
-        int result=blogDao.updateBlog(blog.getId(), blog.getTitle(), blog.getContent(), blog.getCateId());
+    public String modifyBlog(Blog blog) throws ManagementException {
+        int result=blogDao.updateBlog(blog);
         if(result==1)
-            return BlogActionStateEnum.MODIFY_SUCCESS.getStateInfo();
+            return OperStateEnum.BLOG_MODIFY_SUCCESS.getStateInfo();
         else {
-            throw new ModifyException(BlogActionStateEnum.MODIFY_ERROR.getStateInfo());
+            throw new ManagementException(OperStateEnum.BLOG_MODIFY_ERROR.getStateInfo());
         }
     }
 

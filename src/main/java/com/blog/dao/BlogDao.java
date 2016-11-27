@@ -25,7 +25,7 @@ public interface BlogDao {
      * @return 如果影响记录数=1，表示增加成功
      */
 
-    int addBlog(@Param("title") String title, @Param("content") String content, @Param("cateId") int cateId);
+    int addBlog(Blog blog);
 
 
     /**
@@ -41,8 +41,7 @@ public interface BlogDao {
      * @return 如果影响记录数=1，表示更新成功
      */
 
-    int updateBlog(@Param("id") int id, @Param("title") String title,
-                   @Param("content") String content, @Param("cateId") int cateId);
+    int updateBlog(Blog blog);
 
     /**
      * 显示指定博客

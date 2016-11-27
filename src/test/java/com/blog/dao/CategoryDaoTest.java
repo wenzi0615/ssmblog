@@ -30,8 +30,9 @@ public class CategoryDaoTest {
     @Test
     public void addCategory() throws Exception {
 
-        String name="add test";
-        int result=categoryDao.addCategory(name);
+        Category category=new Category();
+        category.setName("add test update");
+        int result=categoryDao.addCategory(category);
         System.out.println("result: "+result);
     }
 
@@ -46,9 +47,10 @@ public class CategoryDaoTest {
     @Test
     public void updateCategory() throws Exception {
 
-        int id=1;
-        String name="agile";
-        int result=categoryDao.updateCategory(id, name);
+        Category category=new Category();
+        category.setId(1);
+        category.setName("agile up");
+        int result=categoryDao.updateCategory(category);
         System.out.println("result: "+result);
     }
 

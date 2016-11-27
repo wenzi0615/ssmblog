@@ -2,10 +2,8 @@ package com.blog.service.impl;
 
 import com.blog.dao.CategoryDao;
 import com.blog.entity.Category;
-import com.blog.enums.CategoryActionStateEnum;
-import com.blog.exception.AddException;
-import com.blog.exception.DeleteException;
-import com.blog.exception.ModifyException;
+import com.blog.enums.OperStateEnum;
+import com.blog.exception.ManagementException;
 import com.blog.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,32 +27,32 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public String addCategory(Category category) {
-        int result=categoryDao.addCategory(category.getName());
+    public String addCategory(Category category) throws ManagementException{
+        int result=categoryDao.addCategory(category);
         if(result==1)
-            return CategoryActionStateEnum.ADD_SUCCESS.getStateInfo();
+            return OperStateEnum.CATEGORY_ADD_SUCCESS.getStateInfo();
         else {
-            throw new AddException(CategoryActionStateEnum.ADD_ERROR.getStateInfo());
+            throw new ManagementException(OperStateEnum.CATEGORY_ADD_ERROR.getStateInfo());
         }
     }
 
     @Override
-    public String deleteCategory(int id) {
+    public String deleteCategory(int id) throws ManagementException{
         int result=categoryDao.deleteCategory(id);
         if(result==1)
-            return CategoryActionStateEnum.DELETE_SUCCESS.getStateInfo();
+            return OperStateEnum.CATEGORY_DELETE_SUCCESS.getStateInfo();
         else {
-            throw new DeleteException(CategoryActionStateEnum.DELETE_ERROR.getStateInfo());
+            throw new ManagementException(OperStateEnum.CATEGORY_DELETE_ERROR.getStateInfo());
         }
     }
 
     @Override
-    public String modifyCategory(Category category) {
-        int result=categoryDao.updateCategory(category.getId(),category.getName());
+    public String modifyCategory(Category category) throws ManagementException{
+        int result=categoryDao.updateCategory(category);
         if(result==1)
-            return CategoryActionStateEnum.MODIFY_SUCCESS.getStateInfo();
+            return OperStateEnum.CATEGORY_MODIFY_SUCCESS.getStateInfo();
         else {
-            throw new ModifyException(CategoryActionStateEnum.MODIFY_ERROR.getStateInfo());
+            throw new ManagementException(OperStateEnum.CATEGORY_MODIFY_ERROR.getStateInfo());
         }
     }
 

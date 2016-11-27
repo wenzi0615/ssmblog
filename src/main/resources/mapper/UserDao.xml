@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为dao接口方法提供sql语句配置 sql语句结尾没分号-->
+<mapper namespace="com.blog.dao.UserDao">
+
+    <select id="queryAll" resultType="User">
+        <!-- 具体的sql语句 id是方法名 resultType是返回类型 int不用给 parameter会自动识别-->
+        select id, username, password, status, permission, create_time
+        from user
+        order by id
+        limit #{offset}, #{limit}
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        <!-- ignore: 主键冲突时 忽略错误并返回0 -->
+        insert ignore into user(username, password, status, permission, create_time)
+        values(#{username}, #{password}, #{status}, #{permission}, #{createTime});
+    </insert>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from user
+        where id=#{id}
+    </delete>
+
+    <update id="updateUserInfo" parameterType="User">
+        update user
+        set username=#{username},
+        password=#{password},
+        status=#{status},
+        permission=#{permission}
+        where id=#{id}
+    </update>
+
+    <select id="queryById" parameterType="int" resultType="User">
+        select id, username, password, status, permission, create_time
+        from user
+        where id=#{id}
+    </select>
+
+</mapper>

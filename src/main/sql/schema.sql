@@ -34,4 +34,40 @@ VALUES
   ('development'),
   ('research');
 
-mysql -uroot -p
+USE ssmblog;
+
+CREATE TABLE comment(
+  id BIGINT NOT NULL AUTO_INCREMENT COMMENT 'comment id',
+  user_id BIGINT NOT NULL COMMENT 'user id',
+  comment varchar(100) NOT NULL COMMENT 'comment content',
+  blog_id BIGINT NOT NULL COMMENT 'blog id',
+  PRIMARY KEY(id)
+)AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='comment';
+
+INSERT  INTO
+  comment(user_id, comment, blog_id)
+VALUES
+  (101, 'well', 1001),
+  (102, 'development', 1002),
+  (103, 'research', 1003);
+
+USE ssmblog;
+
+CREATE TABLE user(
+  id BIGINT NOT NULL AUTO_INCREMENT COMMENT 'user id',
+  username varchar(30) NOT NULL COMMENT 'username',
+  password varchar(30) NOT NULL COMMENT 'user password',
+  status enum('active','frozen') NOT NULL COMMENT 'user status',
+  permission enum('admin','user','guest') NOT NULL COMMENT 'user permission/level',
+  create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'create time',
+  PRIMARY KEY(id)
+)AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COMMENT='user';
+
+INSERT  INTO
+  user(username, password, status, permission)
+VALUES
+  ('test_user1', '001', 'active', 'admin'),
+  ('test_user2', '001', 'active', 'user'),
+  ('test_user3', '003', 'frozen', 'guest');
+
+mysql -u root -p
